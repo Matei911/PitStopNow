@@ -1,0 +1,32 @@
+<div class="auth-container">
+    <h2>Register</h2>
+    <form (ngSubmit)="onRegister()">
+        <div>
+            <label for="username">Username</label>
+            <input id="username" required />
+        </div>
+        <div>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" required />
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" required />
+        </div>
+        <div>
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" required />
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" required />
+        </div>
+
+        <div>
+            <label for="phone">Phone</label>
+            <input id="phone" required />
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <p *ngIf="message">{{ message }}</p>
+</div>
