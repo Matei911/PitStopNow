@@ -2,15 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Arial', sans-serif; 
-  color: #333; 
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
+
 .auth-logo {
   display: block;
-  margin: 0 auto 20px; 
-  width: 100px; 
-  height: auto; 
+  margin: 0 auto 20px;
+  width: 240px;
+  height: auto;
   border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-logo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .auth-container {
@@ -32,7 +39,8 @@
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
-  color: #143808; 
+  color: #143808;
+  font-weight: bold;
 }
 
 .auth-container form div {
@@ -44,6 +52,7 @@
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #555;
 }
 
 .auth-container input {
@@ -68,26 +77,27 @@
   font-size: 16px;
   font-weight: bold;
   background-color: #143808;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .auth-container button:hover {
-  background-color: #143808;
+  background-color: #0e2b06;
+  transform: translateY(-3px);
 }
 
 .register-link {
-  width: 300px;
+  width: 310px;
   margin: 20px auto;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
   text-align: center;
-  font-size: 14px; 
+  font-size: 14px;
   color: #555;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
@@ -96,7 +106,7 @@
 .register-link:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  color: #333; 
+  color: #333;
 }
 
 .register-link a {
@@ -107,6 +117,6 @@
 }
 
 .register-link a:hover {
-  color: #143808;
+  color: #0e2b06;
   text-decoration: underline;
 }

@@ -21,7 +21,6 @@
             <label for="email">Email</label>
             <input id="email" type="email" required />
         </div>
-
         <div>
             <label for="phone">Phone</label>
             <input id="phone" required />
@@ -29,4 +28,10 @@
         <button type="submit">Register</button>
     </form>
     <p *ngIf="message">{{ message }}</p>
+</div>
+
+<div class="register-box">
+    <p>
+        Already have an account? <a [routerLink]="'/login'">Login</a>
+    </p>
 </div>

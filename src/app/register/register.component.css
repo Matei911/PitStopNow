@@ -5,10 +5,20 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .auth-container h2 {
   text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #143808;
+  margin-bottom: 20px;
 }
 
 .auth-container form div {
@@ -20,6 +30,7 @@
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #555;
 }
 
 .auth-container input {
@@ -40,22 +51,26 @@
 
 .auth-container button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #143808;
   color: white;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .auth-container button:hover {
-  background-color: #143808;
+  background-color: #0e2b06;
+  transform: translateY(-3px);
 }
 
 .error {
   color: red;
   font-size: 0.9em;
+  margin-top: 10px;
 }
 
 .auth-container .register-info {
@@ -69,9 +84,40 @@
   color: #143808;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .auth-container .register-info a:hover {
   text-decoration: underline;
+  color: #0e2b06;
+}
+
+.register-box {
+  width: 310px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.register-box a {
   color: #143808;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-box a:hover {
+  text-decoration: underline;
+  color: #0e2b06;
 }
