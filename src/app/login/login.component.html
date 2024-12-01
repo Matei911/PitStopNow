@@ -1,5 +1,18 @@
 <div class="auth-wrapper">
-    <img src="logoISI.ico" alt="Logo" class="auth-logo" />
+  <img src="logoISI.ico" alt="Logo" class="auth-logo" />
+  <div class="auth-layout">
+    <div class="appointment-container">
+      <div class="appointment-text">
+        <img src="online-booking.png" alt="Calendar" class="calendar-logo" />
+        <h3>Book Appointments</h3>
+        <p>Book your service hassle-free! Easily schedule appointments for your car’s needs with just a few clicks.</p>
+      </div>
+      <div class="rate-service-box">
+        <img src="reviews.png" alt="Rating" class="rate-logo" />
+        <h4>Rate Each Service</h4>
+        <p>Your opinion matters! Rate and review services to help others make informed decisions.</p>
+      </div>
+    </div>
     <div class="auth-container">
       <h2>Login</h2>
       <form (ngSubmit)="onLogin()">
@@ -14,8 +27,22 @@
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
         <button type="submit">Login</button>
       </form>
+      <p class="register-link">
+        Don't have an account? <a [routerLink]="'/register'">Register</a>
+      </p>
     </div>
-    <p class="register-link">
-      Don't have an account? <a [routerLink]="'/register'">Register</a>
-    </p>
+
+    <div class="appointment-container">
+      <div class="appointment-text">
+        <img src="map.png" alt="map" class="map-logo" />
+        <h3>Find services on the map</h3>
+        <p>Find services near you! Explore a network of trusted providers on our interactive map.</p>
+      </div>
+      <div class="rate-service-box">
+        <img src="stress-management.png" alt="Stress-Free" class="stress-logo" />
+        <h4>Stress-Free Experience</h4>
+        <p>Say goodbye to stress! Enjoy seamless and stress-free car care, all in one place.</p>
+      </div>
   </div>
+
+</div>

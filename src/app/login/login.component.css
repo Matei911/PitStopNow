@@ -90,21 +90,22 @@
 }
 
 .register-link {
-  width: 310px;
-  margin: 20px auto;
-  padding: 15px;
+  width: 100%; /* Full width to center it relative to the auth-container */
+  text-align: center; /* Center the text */
+  margin-top: 20px; /* Space above the link */
+  padding: 10px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
-  text-align: center;
   font-size: 14px;
   color: #555;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  position: relative;
 }
 
 .register-link:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   color: #333;
 }
@@ -119,4 +120,93 @@
 .register-link a:hover {
   color: #0e2b06;
   text-decoration: underline;
+}
+.auth-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px; /* Space between the main sections */
+  padding: 20px;
+}
+
+.appointment-container {
+  display: flex;
+  flex-direction: column; /* Stack the child elements vertically */
+  gap: 20px; /* Add spacing between the boxes */
+}
+
+.appointment-text,
+.rate-service-box,
+.services-text {
+  max-width: 280px;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appointment-text:hover,
+.rate-service-box:hover,
+.services-text:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.appointment-text h3,
+.rate-service-box h4,
+.services-text h3 {
+  font-size: 22px;
+  color: #143808;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #143808;
+  padding-bottom: 5px;
+}
+
+.appointment-text p,
+.rate-service-box p,
+.services-text p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+  margin-top: 10px;
+}
+
+.map-logo{
+  display: block;
+  margin: 0 auto 20px;
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.calendar-logo{
+  display: block;
+  margin: 0 auto 20px;
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.rate-logo{
+  display: block;
+  margin: 0 auto 20px;
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stress-logo{
+  display: block;
+  margin: 0 auto 20px;
+  width: 95px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
