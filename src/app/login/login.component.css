@@ -4,40 +4,52 @@
   align-items: center;
   font-family: 'Arial', sans-serif;
   color: #333;
+  padding: 20px;
+  min-height: 100vh;
 }
 
+/* Logo Styling */
 .auth-logo {
   display: block;
-  margin: 0 auto 20px;
-  width: 240px;
+  margin: 0 auto 40px;
+  width: 150px;
   height: auto;
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .auth-logo:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
+/* Main Layout Styling */
+.auth-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px; /* Space between sections */
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Login Box Styling */
 .auth-container {
-  width: 300px;
-  margin: 50px auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: #ffffff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .auth-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .auth-container h2 {
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 20px;
   color: #143808;
   font-weight: bold;
@@ -79,7 +91,7 @@
   background-color: #143808;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -90,62 +102,40 @@
 }
 
 .register-link {
-  width: 100%; /* Full width to center it relative to the auth-container */
-  text-align: center; /* Center the text */
-  margin-top: 20px; /* Space above the link */
-  padding: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  text-align: center;
+  margin-top: 20px;
   font-size: 14px;
   color: #555;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-  position: relative;
-}
-
-.register-link:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  color: #333;
 }
 
 .register-link a {
   color: #143808;
   font-weight: bold;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .register-link a:hover {
   color: #0e2b06;
   text-decoration: underline;
 }
-.auth-layout {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 40px; /* Space between the main sections */
-  padding: 20px;
-}
 
+/* Feature Boxes */
 .appointment-container {
   display: flex;
-  flex-direction: column; /* Stack the child elements vertically */
-  gap: 20px; /* Add spacing between the boxes */
+  flex-direction: column;
+  gap: 20px;
 }
 
 .appointment-text,
 .rate-service-box,
 .services-text {
-  max-width: 280px;
-  text-align: left;
-  font-size: 16px;
-  color: #333;
-  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   background: #f7f7f7;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -161,12 +151,10 @@
 .appointment-text h3,
 .rate-service-box h4,
 .services-text h3 {
-  font-size: 22px;
+  font-size: 20px;
   color: #143808;
   font-weight: bold;
   margin-bottom: 10px;
-  border-bottom: 2px solid #143808;
-  padding-bottom: 5px;
 }
 
 .appointment-text p,
@@ -175,38 +163,15 @@
   font-size: 15px;
   line-height: 1.6;
   color: #555;
-  margin-top: 10px;
 }
 
-.map-logo{
-  display: block;
-  margin: 0 auto 20px;
-  width: 70px;
+/* Icons */
+.calendar-logo,
+.map-logo,
+.rate-logo,
+.stress-logo {
+  width: 60px;
   height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px;
 }
-.calendar-logo{
-  display: block;
-  margin: 0 auto 20px;
-  width: 70px;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.rate-logo{
-  display: block;
-  margin: 0 auto 20px;
-  width: 70px;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.stress-logo{
-  display: block;
-  margin: 0 auto 20px;
-  width: 95px;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+
