@@ -2,13 +2,59 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import esriConfig from '@arcgis/core/config';
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
+  imports: [CommonModule],
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+  trustedPartners = [
+    {
+      name: 'ProAuto Targu Jiu',
+      logo: 'logoProAuto.png',
+      rating: 4.5,
+      address: 'Calea București 66, Târgu Jiu',
+      distance: 2
+    },
+    {
+      name: 'CLASAUTO SRL',
+      logo: 'class-auto.png',
+      rating: 4.5,
+      address: 'Strada Dobrogeanu Gherea 2B, Târgu Jiu',
+      distance: 2
+    },
+    {
+      name: 'Bosch Car Service',
+      logo: 'bosch-service-logo.png',
+      rating: 4.5,
+      address: 'Strada Barajului 8A, Târgu Jiu',
+      distance: 2
+    },
+    {
+      name: 'M-Auto',
+      logo: 'mauto.png',
+      rating: 4.5,
+      address: 'Strada Tismana nr.71, Târgu Jiu',
+      distance: 2
+    },
+    {
+      name: 'Euromaster Ascet',
+      logo: 'logoEuromaster.png',
+      rating: 4.5,
+      address: 'Strada Termocentralei 20, Târgu Jiu',
+      distance: 2
+    },
+    {
+      name: 'Dacia Lazar Service',
+      logo: 'logo_s_w.png',
+      rating: 4.5,
+      address: 'Aleea Victoriei 1, Târgu Jiu',
+      distance: 2
+    }
+  ];
+
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit(): void {
@@ -17,7 +63,7 @@ export class MapComponent implements OnInit {
 
     // Create a new Map
     const map = new Map({
-      basemap: 'arcgis-topographic' // Use the desired basemap
+      basemap: 'streets-navigation-vector' // Use the desired basemap
     });
 
     // Create a MapView and set its container to the div in the HTML
