@@ -10,7 +10,7 @@
         <img src="star.png" alt="star" class="star" />
         {{ partner.rating }}
       </div>
-      <div class="adress">{{ partner.address }}</div>
+      <div class="address">{{ partner.address }}</div>
       <div class="distance">{{ partner.distance }} km</div>
     </div>
     <div class="button-container">
@@ -19,3 +19,19 @@
   </div>
 </div>
 <div id="mapViewDiv"></div>
+
+<!-- Footer navigation bar -->
+<div class="bottom-nav">
+  <div class="nav-button">
+    <img src="home.png" alt="Home" />
+    <span>Home</span>
+  </div>
+  <div class="nav-button" (click)="goToAppointments()">
+    <img src="appointment.png" alt="Appointments" />
+    <span>Appointments</span>
+  </div>
+  <div class="nav-button" (click)="goToProfile()">
+    <img src="user.png" alt="Profile" />
+    <span>My profile</span>
+  </div>
+</div>

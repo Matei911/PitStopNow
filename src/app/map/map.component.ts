@@ -3,6 +3,8 @@ import esriConfig from '@arcgis/core/config';
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -55,7 +57,7 @@ export class MapComponent implements OnInit {
     }
   ];
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private router: Router) {}
 
   ngOnInit(): void {
     // Set the API key for accessing ArcGIS Online
@@ -71,7 +73,16 @@ export class MapComponent implements OnInit {
       container: this.elementRef.nativeElement.querySelector('#mapViewDiv'), // Reference to the map container
       map: map,
       center: [23.274, 45.035], // Longitude, latitude
-      zoom: 15 // Zoom level
+      zoom: 13 // Zoom level
     });
   }
+    // Navigate to the profile page
+    goToProfile(): void {
+      this.router.navigate(['/profile']); // Use the router to navigate to the profile page
+    }
+  
+    // Navigate to the appointments page
+    goToAppointments(): void {
+      this.router.navigate(['/appointments']); // Use the router to navigate to appointments
+    }
 }
