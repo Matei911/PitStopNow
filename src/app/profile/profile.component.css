@@ -1,0 +1,95 @@
+.profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #dfe6e9;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', Arial, sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #2d3436;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.profile-details {
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+}
+
+.profile-details p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 8px 0;
+    color: #636e72;
+}
+
+.profile-details p strong {
+    color: #2d3436;
+    font-weight: 500;
+}
+
+.profile-image {
+    text-align: center;
+    padding: 25px;
+    background: linear-gradient(135deg, #ffffff, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+    border: 4px solid #143808;
+    box-shadow: 0 5px 15px rgba(0, 54, 3, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 10px 20px rgba(0, 54, 3, 0.5);
+}
+
+input[type="file"] {
+    display: block;
+    margin: 15px auto;
+    padding: 12px 15px;
+    font-size: 16px;
+    color: #2d3436;
+    background: linear-gradient(135deg, #dfe6e9, #ffffff);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background: linear-gradient(135deg, #ffffff, #dfe6e9);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+input[type="file"]:focus {
+    outline: none;
+    border: 1px solid #6c5ce7;
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+}
