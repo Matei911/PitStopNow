@@ -1,19 +1,48 @@
 <div class="profile-container">
-    <h1>Profil Utilizator</h1>
-  
-    <div class="profile-details">
-      <p><strong>Username:</strong> numele de utilizator, unic</p>
-      <p><strong>Parolă:</strong> parola utilizatorului</p>
-      <p><strong>ID Service:</strong> referința către <code>id</code> din tabela <code>Service</code>, cheie străină</p>
-      <p><strong>Nume:</strong> numele complet al utilizatorului</p>
-      <p><strong>Telefon:</strong> numărul de telefon al utilizatorului, unic</p>
-      <p><strong>Email:</strong> adresa de email a utilizatorului, unică</p>
-    </div>
-  
-    <div class="profile-image">
+  <h1>Profil Utilizator</h1>
+
+  <div class="profile-details">
+      <p>
+          <strong>Username:</strong>
+          <span *ngIf="!isEditing">{{ username }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="username" />
+      </p>
+      <p>
+          <strong>Parolă:</strong>
+          <span *ngIf="!isEditing">{{ password }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="password" type="password" />
+      </p>
+      <p>
+          <strong>ID Service:</strong>
+          <span *ngIf="!isEditing">{{ serviceId }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="serviceId" />
+      </p>
+      <p>
+          <strong>Nume:</strong>
+          <span *ngIf="!isEditing">{{ fullName }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="fullName" />
+      </p>
+      <p>
+          <strong>Telefon:</strong>
+          <span *ngIf="!isEditing">{{ phone }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="phone" />
+      </p>
+      <p>
+          <strong>Email:</strong>
+          <span *ngIf="!isEditing">{{ email }}</span>
+          <input *ngIf="isEditing" [(ngModel)]="email" type="email" />
+      </p>
+  </div>
+
+  <div class="profile-image">
       <h2>Imagine Profil</h2>
       <img *ngIf="profileImage" [src]="profileImage" alt="Imagine Profil" class="profile-img" />
       <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-    </div>
   </div>
-  
+
+  <div class="profile-actions">
+      <button *ngIf="!isEditing" (click)="enableEditing()">Editează</button>
+      <button *ngIf="isEditing" (click)="saveChanges()">Salvează</button>
+      <button *ngIf="isEditing" (click)="cancelEditing()">Anulează</button>
+  </div>
+</div>

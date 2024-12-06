@@ -90,6 +90,31 @@ input[type="file"]:hover {
 
 input[type="file"]:focus {
     outline: none;
-    border: 1px solid #6c5ce7;
+    border: 1px solid #143808;
     box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+}
+.profile-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile-actions button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #143808;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-actions button:hover {
+    background-color: #143808;
+}
+
+.profile-actions button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.8);
 }
