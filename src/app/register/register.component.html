@@ -3,27 +3,38 @@
     <form (ngSubmit)="onRegister()">
         <div>
             <label for="username">Username</label>
-            <input id="username" required />
+            <input id="username" [(ngModel)]="username" name="username" required />
         </div>
         <div>
             <label for="fullName">Full Name</label>
-            <input id="fullName" required />
+            <input id="fullName" [(ngModel)]="fullName" name="fullName" required />
         </div>
         <div>
             <label for="password">Password</label>
-            <input id="password" type="password" required />
+            <input id="password" type="password" [(ngModel)]="password" name="password" required />
         </div>
         <div>
             <label for="confirmPassword">Confirm Password</label>
-            <input id="confirmPassword" type="password" required />
+            <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
         </div>
         <div>
             <label for="email">Email</label>
-            <input id="email" type="email" required />
+            <input id="email" type="email" [(ngModel)]="email" name="email" required />
         </div>
         <div>
             <label for="phone">Phone</label>
-            <input id="phone" required />
+            <input id="phone" [(ngModel)]="phone" name="phone" required />
+        </div>
+        <div>
+            <label for="service">Select Service (Optional)</label>
+            <select id="service" [(ngModel)]="service" name="service">
+                <option [value]="''">-- Select a service --</option>
+                <option *ngFor="let option of dropdownOptions" [value]="option.name">{{ option.name }}</option>
+            </select>
+        </div>
+        <div *ngIf="service">
+            <label for="serviceId">Service ID</label>
+            <input id="serviceId" [(ngModel)]="serviceId" name="serviceId" />
         </div>
         <button type="submit">Register</button>
     </form>

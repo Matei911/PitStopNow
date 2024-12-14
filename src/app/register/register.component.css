@@ -121,3 +121,26 @@
   text-decoration: underline;
   color: #0e2b06;
 }
+.auth-container select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  transition: border-color 0.3s ease;
+  background-color: white; 
+  color: #555; 
+}
+
+.auth-container select:focus {
+  border-color: #143808;
+  outline: none;
+  background-color: #f9f9f9; 
+}
+
+.auth-container select option {
+  color: #555;
+  background-color: white;
+}
