@@ -1,1 +1,32 @@
-<p>appointments works!</p>
+<div class="container">
+    <h2>Appointment Scheduler</h2>
+    
+    <!-- Date Picker -->
+    <div>
+      <label for="date">Select a Date:</label>
+      <input type="date" id="date" [(ngModel)]="selectedDate" />
+      <p>Selected Date: <strong>{{ selectedDate }}</strong></p>
+    </div>
+  
+    <!-- Service Dropdown -->
+    <div>
+      <label for="service">Select a Service:</label>
+      <select id="service" [(ngModel)]="selectedService">
+        <option *ngFor="let service of services" [value]="service">{{ service }}</option>
+      </select>
+      <p>Selected Service: <strong>{{ selectedService }}</strong></p>
+    </div>
+  
+    <!-- Time Slot Dropdown -->
+    <div>
+      <label for="time">Select a Time Slot:</label>
+      <select id="time" [(ngModel)]="selectedTime">
+        <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
+      </select>
+      <p>Selected Time Slot: <strong>{{ selectedTime }}</strong></p>
+    </div>
+  
+    <!-- Action Button -->
+    <button (click)="confirmAppointment()">Confirm Appointment</button>
+  </div>
+  
