@@ -4,12 +4,13 @@ import { RegisterComponent } from './register/register.component';
 import { MapComponent } from './map/map.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { ProfileComponent } from './profile/profile.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'map', component: MapComponent },
-  { path: 'appointments', component: AppointmentsComponent},
-  {path: 'profile', component: ProfileComponent},
+  { path: 'map', component: MapComponent, canActivate: [authGuard], data: { roles: ['user', 'service'] } },
+  { path: 'appointments', component: AppointmentsComponent, canActivate: [authGuard], data: { roles: ['user', 'service'] } },
+  {path: 'profile', component: ProfileComponent, canActivate: [authGuard], data: { roles: ['user', 'service'] } },
 ];
