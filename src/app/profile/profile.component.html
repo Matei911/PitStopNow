@@ -1,48 +1,80 @@
 <div class="profile-container">
-  <h1>Profil Utilizator</h1>
+    <h1>User Profile</h1>
 
-  <div class="profile-details">
-      <p>
-          <strong>Username:</strong>
-          <span *ngIf="!isEditing">{{ username }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="username" />
-      </p>
-      <p>
-          <strong>Parolă:</strong>
-          <span *ngIf="!isEditing">{{ password }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="password" type="password" />
-      </p>
-      <p>
-          <strong>ID Service:</strong>
-          <span *ngIf="!isEditing">{{ serviceId }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="serviceId" />
-      </p>
-      <p>
-          <strong>Nume:</strong>
-          <span *ngIf="!isEditing">{{ fullName }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="fullName" />
-      </p>
-      <p>
-          <strong>Telefon:</strong>
-          <span *ngIf="!isEditing">{{ phone }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="phone" />
-      </p>
-      <p>
-          <strong>Email:</strong>
-          <span *ngIf="!isEditing">{{ email }}</span>
-          <input *ngIf="isEditing" [(ngModel)]="email" type="email" />
-      </p>
-  </div>
+    <div class="profile-details">
+        <p>
+            <strong>Username:</strong>
+            <span *ngIf="!isEditing">{{ username }}</span>
+            <input *ngIf="isEditing" [(ngModel)]="username" />
+        </p>
+        <p>
+            <strong>Password:</strong>
+            <span *ngIf="!isEditing">******</span>
+        <div *ngIf="isEditing">
+            <!-- Current Password input -->
+            <label for="currentPassword" class="input-label">Current Password</label>
+            <input id="currentPassword" [(ngModel)]="currentPassword" type="password"
+                placeholder="Enter current password" required class="form-input" />
 
-  <div class="profile-image">
-      <h2>Imagine Profil</h2>
-      <img *ngIf="profileImage" [src]="profileImage" alt="Imagine Profil" class="profile-img" />
-      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-  </div>
+            <!-- New Password input -->
+            <label for="newPassword" class="input-label">New Password</label>
+            <input id="newPassword" [(ngModel)]="password" type="password" placeholder="Enter new password" required
+                class="form-input" />
 
-  <div class="profile-actions">
-      <button *ngIf="!isEditing" (click)="enableEditing()">Editează</button>
-      <button *ngIf="isEditing" (click)="saveChanges()">Salvează</button>
-      <button *ngIf="isEditing" (click)="cancelEditing()">Anulează</button>
-  </div>
+            <!-- Confirm Password input -->
+            <label for="confirmPassword" class="input-label">Confirm New Password</label>
+            <input id="confirmPassword" [(ngModel)]="confirmPassword" type="password" placeholder="Confirm new password"
+                required class="form-input" />
+
+            <!-- Error message -->
+            <small *ngIf="passwordError" class="error-message">{{ passwordError }}</small>
+        </div>
+
+        <p *ngIf="serviceId !== null">
+            <strong>ID Service:</strong>
+            <span *ngIf="!isEditing">{{ serviceId }}</span>
+            <input *ngIf="isEditing" [(ngModel)]="serviceId" />
+        </p>
+        <p>
+            <strong>Name:</strong>
+            <span *ngIf="!isEditing">{{ fullName }}</span>
+            <input *ngIf="isEditing" [(ngModel)]="fullName" />
+        </p>
+        <p>
+            <strong>Phone:</strong>
+            <span *ngIf="!isEditing">{{ phone }}</span>
+            <input *ngIf="isEditing" [(ngModel)]="phone" />
+        </p>
+        <p>
+            <strong>Email:</strong>
+            <span *ngIf="!isEditing">{{ email }}</span>
+            <input *ngIf="isEditing" [(ngModel)]="email" type="email" />
+        </p>
+    </div>
+
+    <div class="profile-image">
+        <h2>Image Profile</h2>
+        <img *ngIf="profileImage" [src]="profileImage" alt="Imagine Profil" class="profile-img" />
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </div>
+
+    <div class="profile-actions">
+        <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
+        <button *ngIf="isEditing" (click)="saveChanges()">Save</button>
+        <button *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
+    </div>
+</div>
+<div class="bottom-nav">
+    <div class="nav-button" (click)="goToMap()">
+        <img src="home.png" alt="Home" />
+        <span>Home</span>
+    </div>
+    <div class="nav-button" (click)="goToAppointments()">
+        <img src="appointment.png" alt="Appointments" />
+        <span>Appointments</span>
+    </div>
+    <div class="nav-button" (click)="goToProfile()">
+        <img src="user.png" alt="Profile" />
+        <span>My profile</span>
+    </div>
 </div>

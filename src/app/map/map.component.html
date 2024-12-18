@@ -1,6 +1,8 @@
+
+
 <div id="leftContent">
   <div class="title">Trusted Partners</div>
-  <div *ngFor="let partner of trustedPartners" class="box">
+  <div *ngFor="let partner of trustedPartners; let i = index" class="box" [ngClass]="{'selected': highlightedPartnerIndex === i}" (click)="centerMap(partner)">
     <div class="logo-container">
       <img [src]="partner.logo" [alt]="partner.name" class="logo" />
     </div>
@@ -11,14 +13,34 @@
         {{ partner.rating }}
       </div>
       <div class="address">{{ partner.address }}</div>
-      <div class="distance">{{ partner.distance }} km</div>
+      <div *ngIf="partner.distance" class="distance">{{ partner.distance }} km</div>
     </div>
-    <div class="button-container">
+    <div class="button-container" (click)="goToReserve(partner)">
       <button class="reservation-button">Reserve</button>
     </div>
   </div>
 </div>
 <div id="mapViewDiv"></div>
+<button *ngIf="isLocationAvailable" class="location-button" (click)="goToCurrentLocation()">
+  <img src="compass-svgrepo-com.svg" alt="Go to Current Location" class="icon" />
+</button>
+<!-- Popup Box -->
+<div *ngIf="showPopup" class="popup-box">
+  <div class="popup-content">
+    <p>This is a popup box. Click dismiss to close it.</p>
+    <div class="rating-container">
+      <span 
+        *ngFor="let star of stars; let i = index" 
+        [ngClass]="{'active': i < hoverIndex || i < currentRating}"
+        (mouseenter)="setHoverIndex(i + 1)"
+        (mouseleave)="clearHoverIndex()"
+        (click)="setRating(i + 1)">
+        ★
+      </span>
+    </div>
+    <button (click)="dismissPopup()">Dismiss</button>
+  </div>
+</div>
 
 <!-- Footer navigation bar -->
 <div class="bottom-nav">

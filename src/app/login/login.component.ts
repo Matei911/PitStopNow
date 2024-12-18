@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HostListener } from '@angular/core';
 import { environment } from '../environment'
 
@@ -10,7 +10,7 @@ import { environment } from '../environment'
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -48,8 +48,6 @@ export class LoginComponent {
         console.log('Login successful:', response);
         sessionStorage.setItem('username', this.username);
         sessionStorage.setItem("token", response["token"]);
-        let role = "user";
-        sessionStorage.setItem("role", role);
         history.replaceState(null, "", window.location.href);
         this.router.navigate(['/map']);
       },
@@ -60,18 +58,4 @@ export class LoginComponent {
     });
   }
 
-
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: Event) {
-  //   const payload = JSON.stringify({ token: sessionStorage.getItem("token") });
-
-  //   if (navigator.sendBeacon) {
-  //     const success = navigator.sendBeacon(this.urlLogout, payload);
-  //     if (!success) {
-  //       console.error('Logout beacon failed to send.');
-  //     }
-  //   } else {
-  //     console.warn('sendBeacon not supported by this browser.');
-  //   }
-  // }
 }

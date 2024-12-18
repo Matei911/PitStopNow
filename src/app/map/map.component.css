@@ -174,3 +174,98 @@
   color: #143808;
   transform: scale(1.1);
 }
+
+.box.selected {
+  background-color: #f1c40f;
+  border-color: #e67e22;
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.box.selected {
+  background-color: #4caf50; /* A pleasant green shade */
+  border-color: #388e3c;    /* Slightly darker green for the border */
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+  color: #ffffff;          /* Ensure text is white for good contrast */
+}
+
+.location-button {
+  position: absolute;
+  bottom: 90px;       /* Adjust as needed */
+  right: 20px;        /* Place at bottom-right */
+  z-index: 2000;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 50%; /* Circular button */
+  width: 50px;        /* Button width */
+  height: 50px;       /* Button height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.location-button:hover {
+  background-color: #388e3c;
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.location-button .icon {
+  width: 24px;        /* Icon width */
+  height: 24px;       /* Icon height */
+}
+
+.popup-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #143808;
+  color: white;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background-color: #143808;
+}
+.rating-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem; /* Adjust size as needed */
+  color: #ccc; /* Default star color */
+  cursor: pointer;
+}
+
+.rating-container .active {
+  color: #ffc107; /* Highlighted star color */
+  transition: color 0.2s ease-in-out;
+}
+
+.rating-container span {
+  margin: 0 5px; /* Space between stars */
+}
