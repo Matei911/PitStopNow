@@ -1,32 +1,44 @@
-<div class="container">
-    <h2>Appointment Scheduler</h2>
-    
-    <!-- Date Picker -->
-    <div>
-      <label for="date">Select a Date:</label>
-      <input type="date" id="date" [(ngModel)]="selectedDate" />
-      <p>Selected Date: <strong>{{ selectedDate }}</strong></p>
+<div class="appointments-container">
+  <!-- Ongoing Appointment Box -->
+  <div class="ongoing-box" *ngIf="ongoingReservation">
+    <h2>Ongoing Reservation</h2>
+    <div class="ongoing-details">
+      <p><strong>Title:</strong> {{ ongoingReservation.title }}</p>
+      <p><strong>Date:</strong> {{ ongoingReservation.date }}</p>
+      <p><strong>Time:</strong> {{ ongoingReservation.time }}</p>
+      <p><strong>Location:</strong> {{ ongoingReservation.location }}</p>
+      <p><strong>Address:</strong> {{ ongoingReservation.address }}</p>
     </div>
-  
-    <!-- Service Dropdown -->
-    <div>
-      <label for="service">Select a Service:</label>
-      <select id="service" [(ngModel)]="selectedService">
-        <option *ngFor="let service of services" [value]="service">{{ service }}</option>
-      </select>
-      <p>Selected Service: <strong>{{ selectedService }}</strong></p>
-    </div>
-  
-    <!-- Time Slot Dropdown -->
-    <div>
-      <label for="time">Select a Time Slot:</label>
-      <select id="time" [(ngModel)]="selectedTime">
-        <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
-      </select>
-      <p>Selected Time Slot: <strong>{{ selectedTime }}</strong></p>
-    </div>
-  
-    <!-- Action Button -->
-    <button (click)="confirmAppointment()">Confirm Appointment</button>
   </div>
-  
+
+  <!-- History Section -->
+  <h3 class="history-title">Appointment History</h3>
+  <div class="history-box">
+    <div *ngIf="appointmentHistory && appointmentHistory.length > 0; else noAppointments">
+      <div class="history-item" *ngFor="let appointment of appointmentHistory">
+        <p><strong>Title:</strong> {{ appointment.title }}</p>
+        <p><strong>Date:</strong> {{ appointment.date }}</p>
+        <p><strong>Time:</strong> {{ appointment.time }}</p>
+        <p><strong>Location:</strong> {{ appointment.location }}</p>
+        <p><strong>Address:</strong> {{ appointment.address }}</p>
+      </div>
+    </div>
+    <ng-template #noAppointments>
+      <p>No previous appointments</p>
+    </ng-template>
+  </div>
+</div>
+<div class="bottom-nav">
+  <div class="nav-button" (click)="goToMap()">
+    <img src="home.png" alt="Home" />
+    <span>Home</span>
+  </div>
+  <div class="nav-button" (click)="goToAppointments()">
+    <img src="appointment.png" alt="Appointments" />
+    <span>Appointments</span>
+  </div>
+  <div class="nav-button" (click)="goToProfile()">
+    <img src="user.png" alt="Profile" />
+    <span>My profile</span>
+  </div>
+</div>

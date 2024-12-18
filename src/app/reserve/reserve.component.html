@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>Reserve Scheduler</h2>
+    <h3>{{ nameService }}</h3>
+
+    <!-- Date Picker -->
+    <div>
+        <label for="date">Select a Date:</label>
+        <input type="date" id="date" [(ngModel)]="selectedDate" [min]="today" [max]="maxDate"
+            (change)="onDateChange()" />
+        <p>Selected Date: <strong>{{ selectedDate }}</strong></p>
+    </div>
+
+    <!-- Service Dropdown -->
+    <div>
+        <label for="service">Select a Service:</label>
+        <select id="service" [(ngModel)]="selectedService">
+            <option *ngFor="let service of services" [value]="service">{{ service }}</option>
+        </select>
+        <p>Selected Service: <strong>{{ selectedService }}</strong></p>
+    </div>
+
+    <!-- Time Slot Dropdown -->
+    <div>
+        <label for="time">Select a Time Slot:</label>
+        <select id="time" [(ngModel)]="selectedTime">
+            <option *ngFor="let time of timeSlots" [value]="time">{{ time }}</option>
+        </select>
+        <p>Selected Time Slot: <strong>{{ selectedTime }}</strong></p>
+    </div>
+
+    <!-- Action Button -->
+    <div class="button-container">
+        <button (click)="goBack()">Go Back</button>
+        <button (click)="confirmAppointment()">Confirm Appointment</button>
+
+    </div>
+</div>
