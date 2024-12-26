@@ -87,8 +87,13 @@ export class ProfileComponent implements OnInit {
 
     // Validate the password confirmation
     if (this.password || this.confirmPassword) {
-      if (this.password.length < 6) {
-        this.passwordError = 'Password must be at least 6 characters.';
+      if (this.password.length < 8) {
+        this.passwordError = 'Password must be at least 8 characters.';
+        return;
+      }
+      //must contain at leat one special character
+      if (!/[!@#$%^&*]/.test(this.password)) {
+        this.passwordError = 'Password must contain at least one special character.';
         return;
       }
       if (this.password !== this.confirmPassword) {

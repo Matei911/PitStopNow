@@ -5,7 +5,7 @@
         <p>
             <strong>Username:</strong>
             <span *ngIf="!isEditing">{{ username }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="username" />
+            <input *ngIf="isEditing" [(ngModel)]="username" class="form-input" />
         </p>
         <p>
             <strong>Password:</strong>
@@ -33,22 +33,22 @@
         <p *ngIf="serviceId !== null">
             <strong>ID Service:</strong>
             <span *ngIf="!isEditing">{{ serviceId }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="serviceId" />
+            <input *ngIf="isEditing" [(ngModel)]="serviceId" class="form-input" />
         </p>
         <p>
             <strong>Name:</strong>
             <span *ngIf="!isEditing">{{ fullName }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="fullName" />
+            <input *ngIf="isEditing" [(ngModel)]="fullName" class="form-input" />
         </p>
         <p>
             <strong>Phone:</strong>
             <span *ngIf="!isEditing">{{ phone }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="phone" />
+            <input *ngIf="isEditing" [(ngModel)]="phone" class="form-input" />
         </p>
         <p>
             <strong>Email:</strong>
             <span *ngIf="!isEditing">{{ email }}</span>
-            <input *ngIf="isEditing" [(ngModel)]="email" type="email" />
+            <input *ngIf="isEditing" [(ngModel)]="email" type="email" class="form-input" />
         </p>
     </div>
 
