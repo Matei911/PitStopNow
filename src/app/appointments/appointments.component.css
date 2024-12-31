@@ -5,49 +5,50 @@
   gap: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* Ongoing Reservation Box */
 .ongoing-box {
-  background-color: #fffae6;
-  border: 1px solid #ffd700;
+  background: rgba(255, 223, 0, 0.2); /* Semi-transparent yellow */
+  border: 1px solid rgba(255, 223, 0, 0.8);
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ongoing-box h2 {
   margin: 0 0 10px 0;
   font-size: 1.5em;
-  color: #c59200;
+  color: #ffd700;
 }
 
 .ongoing-details p {
   margin: 5px 0;
-  color: #333;
+  color: #ffffff;
 }
 
 /* History Section */
 .history-title {
   font-size: 1.4em;
-  color: #444;
+  color: #ffffff;
 }
 
 .history-box {
   max-height: 300px;
   overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  color: #ffffff;
 }
 
 .history-item {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 10px 0;
 }
 
@@ -57,8 +58,9 @@
 
 .history-item p {
   margin: 5px 0;
-  color: #555;
+  color: #dddddd;
 }
+
 /* Footer */
 .bottom-nav {
   position: fixed;
@@ -66,13 +68,13 @@
   left: 0;
   width: 100%;
   height: 60px;
-  background-color: #535353;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.7); 
   display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: 1000;
-  border-top: 2px solid #d9d9d9;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .nav-button {
@@ -91,7 +93,7 @@
   width: 20px;
   height: 20px;
   margin-bottom: 5px;
-  filter: brightness(0) invert(1); 
+  filter: brightness(1) invert(1); 
 }
 
 .nav-button span {
@@ -99,6 +101,7 @@
 }
 
 .nav-button:hover {
-  color: #143808;
+  color: #ffffff;
   transform: scale(1.1);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
