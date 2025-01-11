@@ -49,6 +49,7 @@ export class MapComponent implements OnInit {
 
   setRating(index: number): void {
     this.currentRating = index;
+    this.dismissPopup();
     console.log(`User selected rating: ${this.currentRating}`);
   }
   //

@@ -27,7 +27,10 @@
 <!-- Popup Box -->
 <div *ngIf="showPopup" class="popup-box">
   <div class="popup-content">
-    <p>This is a popup box. Click dismiss to close it.</p>
+    <p>
+      Leave a rating for<br>
+      <strong>(Company Name)</strong><br>
+    </p>
     <div class="rating-container">
       <span 
         *ngFor="let star of stars; let i = index" 
