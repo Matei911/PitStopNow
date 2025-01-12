@@ -68,7 +68,7 @@ export class ReserveComponent {
   private async get_free_timeslots(): Promise<string[]> {
     try {
       const response = await this.http
-        .get<string[]>(`${environment.apiBaseUrl}/reservations/${this.serviceId}/${this.selectedDate}`)
+        .get<string[]>(`${environment.apiBaseUrl}/reservations/free/${this.serviceId}/${this.selectedDate}`)
         .toPromise();
       return response || [];
     } catch (error) {
@@ -88,18 +88,23 @@ export class ReserveComponent {
       
       this.http.post(environment.apiBaseUrl + "/reservations/add/", payload).subscribe({
         next: (response: any) => {
-          console.log("Reservation added successfully!");
+          console.log('Response:', response);
+          console.log(
+            `Appointment Confirmed:\nDate: ${this.selectedDate}\nService: ${this.selectedService}\nTime: ${this.selectedTime}`
+          );
+          alert(
+            `Appointment Confirmed:\nDate: ${this.selectedDate}\nService: ${this.selectedService}\nTime: ${this.selectedTime}`
+          );
+          
         },
         error: (error) => {
+          if (error['error']["detail"] == "Userul are deja o programare in curs"){
+            alert("You already have an ongoing appointment.")
+          }
           console.error('ERROR:', error);
         }
       })
-      console.log(
-        `Appointment Confirmed:\nDate: ${this.selectedDate}\nService: ${this.selectedService}\nTime: ${this.selectedTime}`
-      );
-      alert(
-        `Appointment Confirmed:\nDate: ${this.selectedDate}\nService: ${this.selectedService}\nTime: ${this.selectedTime}`
-      );
+      
       this.router.navigate(['/map']);
     } else {
       alert('Please select a date, service, and time slot to confirm the appointment.');

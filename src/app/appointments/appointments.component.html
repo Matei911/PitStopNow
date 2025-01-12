@@ -1,6 +1,6 @@
 <div class="appointments-container">
   <!-- Ongoing Appointment Box -->
-  <div class="ongoing-box" *ngIf="ongoingReservation">
+  <div class="ongoing-box" *ngIf="hasReservation; else noReservation">
     <h2>Ongoing Reservation</h2>
     <div class="ongoing-details">
       <p><strong>Title:</strong> {{ ongoingReservation.title }}</p>
@@ -9,8 +9,11 @@
       <p><strong>Location:</strong> {{ ongoingReservation.location }}</p>
       <p><strong>Address:</strong> {{ ongoingReservation.address }}</p>
     </div>
+    
   </div>
-
+  <ng-template #noReservation>
+    <p>Nicio rezervare în așteptare</p>
+  </ng-template>
   <!-- History Section -->
   <h3 class="history-title">Appointment History</h3>
   <div class="history-box">

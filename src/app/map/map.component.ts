@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { environment } from '../environment';
+import * as route from '@arcgis/core/rest/route';
+import RouteParameters from "@arcgis/core/rest/support/RouteParameters";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import Graphic from '@arcgis/core/Graphic';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
@@ -29,16 +31,18 @@ export class MapComponent implements OnInit {
   userLocationLayer: GraphicsLayer = new GraphicsLayer(); // Layer for user location
   userLocation: Point | null = null; // Store user location
   isLocationAvailable: boolean = false;
-  showPopup: boolean = true; 
+  showPopup: boolean = false; 
   stars: number[] = [1, 2, 3, 4, 5];
   hoverIndex: number = 0;
   currentRating: number = 0;
+  companyName: string = sessionStorage.getItem("service_name") || "";
 
   constructor(private elementRef: ElementRef, private router: Router, private http: HttpClient) {}
   //PopUp related methods
   dismissPopup(): void {
     this.showPopup = false; // Hide the popup
   }
+
   setHoverIndex(index: number): void {
     this.hoverIndex = index;
   }
@@ -50,16 +54,34 @@ export class MapComponent implements OnInit {
   setRating(index: number): void {
     this.currentRating = index;
     this.dismissPopup();
+    this.http.put(environment.apiBaseUrl + "/services/add_rating/" 
+      + sessionStorage.getItem("id_service_reservation"), {rating: index}).subscribe({
+        next: (response: any) => {
+          console.log(response["success"]);
+
+        },
+        error: (error) => {
+          console.error('ERROR:', error);
+        }
+      })
     console.log(`User selected rating: ${this.currentRating}`);
   }
   //
   ngOnInit(): void {
     this.http.get(environment.apiBaseUrl + '/reservations/check/' + sessionStorage.getItem("token")).subscribe({
-      next: (response: any) => {
+        next: (response: any) => {
         let status : string = response["status"];
         if (status === "Reservation Done!")
         {
+          this.showPopup = true;
           console.log("Reservation");
+          sessionStorage.setItem("id_service_reservation", response["id_service_reservation"]);
+          sessionStorage.setItem("service_name", response["service_name"]);
+          this.companyName = response["service_name"];
+        }
+        else
+        {
+          this.dismissPopup();
         }
       },
       error: (error) => {
@@ -304,6 +326,15 @@ highlightPartner(index: number): void {
               const mapViewContainer = this.elementRef.nativeElement.querySelector('#mapViewDiv');
               mapViewContainer.appendChild(popup);
               this.activePopup = popup;
+
+              const reserveButton = popup.querySelector('#reserveButton');
+              if (reserveButton) {
+                reserveButton.addEventListener('click', () => {
+                  const partnerIndex = attributes.index;
+                  const partner = this.trustedPartners[partnerIndex];
+                  this.goToReserve(partner);
+                });
+              }
   
               // Remove the popup when clicking outside
               mapViewContainer.addEventListener('click', () => {
@@ -319,39 +350,110 @@ highlightPartner(index: number): void {
 }
 
 createPopupContent(attributes: any): string {
-    const { Name, Address, Rating, Available } = attributes;
-    const availabilityColor = Available === 'Yes' ? 'green' : 'red';
+  const { Name, Address, Rating, Available } = attributes;
+  const availabilityColor = Available === 'Yes' ? 'green' : 'red';
 
-    return `
-        <h3 style="margin: 0; font-size: 16px; font-weight: bold;">${Name}</h3>
-        <p><strong>Address:</strong> ${Address}</p>
-        <p><strong>Rating:</strong> ★ ${Rating} stars</p>
-        <p><strong>Available:</strong> <span style="color: ${availabilityColor};">${Available}</span></p>
-        ${Available === 'Yes' ? `<button style="padding: 8px 12px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">Reserve</button>` : ''}
-    `;
+  return `
+    <h3 style="margin: 0; font-size: 16px; font-weight: bold;">${Name}</h3>
+    <p><strong>Address:</strong> ${Address}</p>
+    <p><strong>Rating:</strong> ★ ${Rating} stars</p>
+    <p><strong>Available:</strong> <span style="color: ${availabilityColor};">${Available}</span></p>
+    ${
+      Available === 'Yes'
+        ? `<button 
+             id="reserveButton"
+             style="padding: 8px 12px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;"
+           >
+             Reserve
+           </button>`
+        : ''
+    }
+  `;
 }
 
 
 centerMap(partner: any): void {
   // Find the corresponding graphic in the GraphicsLayer
   const targetGraphic = this.ServicesGraphicLayer.graphics.find((graphic: any) => {
-      return graphic.attributes.Name === partner.name;
+    return graphic.attributes.Name === partner.name;
   });
 
-  if (targetGraphic) {
-      // Center the map on the graphic's geometry
-      this.mapView.goTo({
-          target: targetGraphic.geometry,
-          zoom: 17
-      }).then(() => {
-          this.currentCenteredPartner = partner;
-      });
-      const index = this.trustedPartners.findIndex((p) => p.name === partner.name);
-      this.highlightPartner(index);
-  } else {
-      console.warn('Graphic not found for the given partner.');
+  if (!targetGraphic) {
+    console.warn('Graphic not found for the given partner.');
+    return;
   }
+
+  const geometry = targetGraphic.geometry;
+  const attributes = targetGraphic.attributes;
+  
+  // Highlight in the list
+  const index = this.trustedPartners.findIndex((p) => p.name === partner.name);
+  this.highlightPartner(index);
+  
+  // First, goTo the partner's location
+  this.mapView.goTo({
+    target: geometry,
+    zoom: 17
+  }).then(() => {
+
+    // Remove any existing popup
+    if (this.activePopup) {
+      this.activePopup.remove();
+      this.activePopup = null;
+    }
+
+    // Create the popup content using your existing helper
+    const popupContent = this.createPopupContent(attributes);
+
+    // Create a new popup div
+    const popup = document.createElement('div');
+    popup.innerHTML = popupContent;
+    popup.style.position = 'absolute';
+    popup.style.backgroundColor = 'white';
+    popup.style.padding = '10px';
+    popup.style.boxShadow = '0px 4px 8px rgba(0,0,0,0.2)';
+    popup.style.borderRadius = '8px';
+    popup.style.fontFamily = 'Arial, sans-serif';
+    popup.style.fontSize = '14px';
+    popup.style.color = '#444';
+
+    // Get screen coordinates from the mapView
+    // so we know where to place the popup.
+    const screenPoint = this.mapView.toScreen(geometry as Point);
+
+    // Position the popup near the marker's screen location
+    // (Optionally offset X or Y if you want it slightly above the dot)
+    popup.style.left = screenPoint.x + 'px';
+    popup.style.top = screenPoint.y + 'px';
+
+    // Append it to the map container
+    const mapViewContainer = this.elementRef.nativeElement.querySelector('#mapViewDiv');
+    mapViewContainer.appendChild(popup);
+    this.activePopup = popup;
+
+    const reserveButton = popup.querySelector('#reserveButton');
+    if (reserveButton) {
+      reserveButton.addEventListener('click', () => {
+        // Retrieve the partner using the index
+        const selectedPartner = this.trustedPartners[index];
+        this.goToReserve(selectedPartner);
+      });
+    }
+
+    // Remove the popup when clicking on the mapViewContainer again,
+    // or you can use the existing logic in your code.
+    mapViewContainer.addEventListener(
+      'click',
+      () => {
+        if (popup) {
+          popup.remove();
+        }
+      },
+      { once: true }
+    );
+  });
 }
+
 
   
   goToProfile(): void {
