@@ -1,0 +1,53 @@
+<div class="welcome-box">
+    <h2>Welcome back, {{ employeeName }}</h2>
+</div>
+
+<div class="columns-container">
+    <!-- Unprocessed Reservations -->
+    <div class="column">
+        <h3>Unprocessed Reservations</h3>
+        <div *ngFor="let reservation of unprocessedReservations; let i = index" class="reservation-box">
+            <p>{{ reservation.type }}</p>
+            <p>{{ reservation.time }} {{ reservation.date }}</p>
+            <p>{{ reservation.name }} {{ reservation.phone }}</p>
+            <div class="buttons">
+                <button (click)="acceptReservation(i)" class="confirm-btn">Accept</button>
+                <button (click)="rejectReservation(i)" class="reject-btn">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accepted Reservations -->
+    <div class="column">
+        <h3>Accepted Reservations</h3>
+        <div *ngFor="let reservation of acceptedReservations; let i = index" class="reservation-box">
+            <p>{{ reservation.type }}</p>
+            <p>{{ reservation.time }} {{ reservation.date }}</p>
+            <p>{{ reservation.name }} {{ reservation.phone }}</p>
+            <div class="buttons">
+                <button (click)="cancelReservation(i)" class="cancel-btn">Cancel</button>
+                <button (click)="finishReservation(i)" class="finish-btn">Finish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Finished Reservations -->
+    <div class="column">
+        <h3>History of Finished Reservations</h3>
+        <div *ngFor="let reservation of finishedReservations" class="reservation-box">
+            <p>{{ reservation.type }}</p>
+            <p>{{ reservation.time }} {{ reservation.date }}</p>
+            <p>{{ reservation.name }} {{ reservation.phone }}</p>
+        </div>
+    </div>
+</div>
+<div class="bottom-nav">
+    <div class="nav-button" (click)="goToAppointments()">
+        <img src="appointment.png" alt="Appointments" />
+        <span>Appointments</span>
+    </div>
+    <div class="nav-button" (click)="goToProfile()">
+        <img src="user.png" alt="Profile" />
+        <span>My profile</span>
+    </div>
+</div>

@@ -1,29 +1,70 @@
 <div class="auth-container">
     <h2>Register</h2>
-    <form (ngSubmit)="onRegister()">
+    <form #registerForm="ngForm" (ngSubmit)="onRegister()">
         <div>
             <label for="username">Username</label>
-            <input id="username" [(ngModel)]="username" name="username" required />
+            <input id="username" [(ngModel)]="username" name="username" required #usernameCtrl="ngModel" />
+            <div *ngIf="usernameCtrl.invalid && usernameCtrl.touched" class="error">
+                Username is required.
+            </div>
         </div>
         <div>
             <label for="fullName">Full Name</label>
-            <input id="fullName" [(ngModel)]="fullName" name="fullName" required />
+            <input id="fullName" [(ngModel)]="fullName" name="fullName" required #fullNameCtrl="ngModel" />
+            <div *ngIf="fullNameCtrl.invalid && fullNameCtrl.touched" class="error">
+                Full name is required.
+            </div>
         </div>
         <div>
             <label for="password">Password</label>
-            <input id="password" type="password" [(ngModel)]="password" name="password" required />
+            <input
+                id="password"
+                type="password"
+                [(ngModel)]="password"
+                name="password"
+                required
+                #passwordCtrl="ngModel"
+                pattern="^(?=.*[!@#$%^&*(),.?\:{}|<>]).{8,}$"
+            />
+            <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="error">
+                Password must be at least 8 characters long and include a special character.
+            </div>
         </div>
         <div>
             <label for="confirmPassword">Confirm Password</label>
-            <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+            <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordCtrl="ngModel" />
+            <div *ngIf="confirmPasswordCtrl.invalid && confirmPasswordCtrl.touched" class="error">
+                Confirm password is required.
+            </div>
         </div>
         <div>
             <label for="email">Email</label>
-            <input id="email" type="email" [(ngModel)]="email" name="email" required />
+            <input
+                id="email"
+                type="email"
+                [(ngModel)]="email"
+                name="email"
+                required
+                #emailCtrl="ngModel"
+                pattern="^[^@]+@[^@]+\.[^@]+$"
+            />
+            <div *ngIf="emailCtrl.invalid && emailCtrl.touched" class="error">
+                Please enter a valid email address.
+            </div>
         </div>
         <div>
             <label for="phone">Phone</label>
-            <input id="phone" [(ngModel)]="phone" name="phone" required />
+            <input
+                id="phone"
+                [(ngModel)]="phone"
+                name="phone"
+                required
+                #phoneCtrl="ngModel"
+                pattern="^[0-9]{10}$"
+            />
+            <div *ngIf="phoneCtrl.invalid && phoneCtrl.touched" class="error">
+                Phone number must be exactly 10 digits.
+            </div>
         </div>
         <div>
             <label for="service">Select Service (Optional)</label>
@@ -36,7 +77,7 @@
             <label for="serviceId">Service ID</label>
             <input id="serviceId" [(ngModel)]="serviceId" name="serviceId" />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" [disabled]="registerForm.invalid">Register</button>
     </form>
     <p *ngIf="message">{{ message }}</p>
 </div>

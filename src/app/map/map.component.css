@@ -1,3 +1,4 @@
+/* General Title Styling */
 .title {
   font-size: 28px;         
   font-weight: bold;          
@@ -8,10 +9,9 @@
   text-align: center;        
   border-bottom: 3px solid #ffffff; 
   padding-bottom: 10px;   
-
 }
 
-/* Styling for the left content */
+/* Styling for the Left Content */
 #leftContent {
   height: 100vh;        
   width: 48vw;          
@@ -20,47 +20,49 @@
   top: 0;              
   overflow-y: scroll;   
   padding: 20px;        
-  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.3); 
-
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.5); 
 }
+
 #leftContent::-webkit-scrollbar {
   display: none;
 }
+
 #mapViewDiv {
-  height: 100vh;       
+  height: 100vh;   /* Adjust height to fit above footer */
   width: 48vw;          
   position: absolute;    
   right: 0;            
   top: 0;                
-  border-left: 2px solid #333; 
-  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.3); 
-  
+  border-left: 2px solid rgba(255, 255, 255, 0.5); 
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
   overflow: hidden;     
 }
 
-/* Adjusted box */
+/* Adjusted Box Styling */
 .box {
   height: 180px;
   padding: 15px;
   margin: 15px 0;
-  background-color: #535353;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   font-size: 18px;
   font-weight: normal;
-  color: #333;
+  color: #ffffff;
   border-radius: 10px;
-  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.3);
-  border: 2px solid #d9d9d9;
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .box:hover {
   transform: scale(1.03);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Logo container styling */
+/* Logo Container Styling */
 .logo-container {
   flex: 0 0 20%;
   display: flex;
@@ -68,9 +70,7 @@
   align-items: center;
 }
 
-
-
-/* Information container */
+/* Information Container */
 .info-container {
   flex: 1;
   padding-left: 15px;
@@ -79,20 +79,20 @@
   gap: 8px; 
 }
 
-/* Name styling */
+/* Name Styling */
 .name {
   font-size: 22px; 
   font-weight: bold;
-  color: #000;
+  color: #ffffff;
 }
 
-/* Rating styling */
+/* Rating Styling */
 .rating {
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 20px; 
-  color: #f39c12;
+  color: #ffc107;
 }
 
 .star {
@@ -100,28 +100,28 @@
   height: auto;
 }
 
-/* Address and distance */
+/* Address and Distance */
 .adress,
 .distance {
   font-size: 16px; 
   color: #ffffff;
 }
 
-/* Reservation button styling */
+/* Reservation Button Styling */
 .reservation-button {
   padding: 12px 20px; 
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
-  background-color: #000000;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px; 
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
 
 .reservation-button:hover {
-  background-color: #143808;
+  background-color: rgba(255, 255, 255, 0.4);
   transform: scale(1.1); 
 }
 
@@ -138,13 +138,13 @@
   left: 0;
   width: 100%;
   height: 60px;
-  background-color: #535353;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.7); 
   display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: 1000;
-  border-top: 2px solid #d9d9d9;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .nav-button {
@@ -163,7 +163,7 @@
   width: 20px;
   height: 20px;
   margin-bottom: 5px;
-  filter: brightness(0) invert(1); 
+  filter: brightness(1) invert(1); 
 }
 
 .nav-button span {
@@ -171,52 +171,47 @@
 }
 
 .nav-button:hover {
-  color: #143808;
+  color: #ffffff;
   transform: scale(1.1);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
 
 .box.selected {
-  background-color: #f1c40f;
-  border-color: #e67e22;
+  background-color: rgba(76, 175, 80, 0.9);
+  border-color: rgba(56, 142, 60, 0.8);
   transform: scale(1.05);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-.box.selected {
-  background-color: #4caf50; /* A pleasant green shade */
-  border-color: #388e3c;    /* Slightly darker green for the border */
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
-  color: #ffffff;          /* Ensure text is white for good contrast */
+  color: #ffffff;          
 }
 
 .location-button {
   position: absolute;
-  bottom: 90px;       /* Adjust as needed */
-  right: 20px;        /* Place at bottom-right */
+  bottom: 90px;       
+  right: 20px;        
   z-index: 2000;
-  background-color: #4caf50;
+  background-color: rgba(76, 175, 80, 0.8);
   border: none;
-  border-radius: 50%; /* Circular button */
-  width: 50px;        /* Button width */
-  height: 50px;       /* Button height */
+  border-radius: 50%; 
+  width: 50px;        
+  height: 50px;       
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .location-button:hover {
-  background-color: #388e3c;
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  background-color: rgba(56, 142, 60, 0.8);
+  transform: scale(1.05); 
 }
 
 .location-button .icon {
-  width: 24px;        /* Icon width */
-  height: 24px;       /* Icon height */
+  width: 24px;        
+  height: 24px;       
 }
+/*POPUP Box*/
 
 .popup-box {
   position: fixed;
@@ -224,48 +219,74 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.8); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it appears above other content */
+  z-index: 1000;
 }
 
 .popup-content {
-  background: white;
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   font-family: Arial, sans-serif;
+  color: #ffffff; 
 }
 
 .popup-content button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #143808;
-  color: white;
+  background-color: rgba(255, 255, 255, 1); /* Gold button */
+  color: black;
   cursor: pointer;
 }
 
 .popup-content button:hover {
-  background-color: #143808;
+  background-color: rgba(255, 215, 0, 1); /* Brighter gold on hover */
 }
+
 .rating-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem; /* Adjust size as needed */
-  color: #ccc; /* Default star color */
+  font-size: 2rem;
+  color: rgba(255, 215, 0, 0.5); /* Gold for inactive stars */
   cursor: pointer;
 }
 
 .rating-container .active {
-  color: #ffc107; /* Highlighted star color */
+  color: #ffd700; /* Bright gold for active stars */
   transition: color 0.2s ease-in-out;
 }
 
 .rating-container span {
-  margin: 0 5px; /* Space between stars */
+  margin: 0 5px;
 }
+
+.clear-route-button {
+  position: absolute;
+  bottom: 150px;       /* Position above the location button */
+  right: 20px;         /* Align to the right */
+  z-index: 2000;       /* Ensure it appears above other map elements */
+  background-color: rgba(76, 175, 80, 0.9);  /* Green with transparency */
+  border: none;
+  border-radius: 6px;  /* Slightly rounded corners */
+  padding: 8px 16px;   /* Smaller padding */
+  color: white;        /* White text */
+  font-size: 14px;     /* Smaller font size */
+  font-weight: bold;
+  cursor: pointer;     /* Pointer cursor on hover */
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transition for hover effect */
+}
+
+.clear-route-button:hover {
+  background-color: rgba(56, 142, 60, 1);  /* Darker green on hover */
+  transform: scale(1.05);  /* Slight zoom effect */
+}
+
+
+

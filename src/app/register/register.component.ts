@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ThisReceiver } from '@angular/compiler';
 import { environment } from '../environment'
+import { OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-register',
@@ -30,14 +32,19 @@ export class RegisterComponent {
   
   constructor(private http: HttpClient, private router: Router) {}
 
-  dropdownOptions: { id: number; name: string }[] = [
-    { id: 5, name: 'ProAuto Targu Jiu' },
-    { id: 6, name: 'CLASAUTO SRL' },
-    { id: 3, name: 'Bosch Car Service' },
-    { id: 4, name: 'M-Auto' },
-    { id: 7, name: 'Euromaster Ascet' },
-    { id: 8, name: 'Dacia Lazar Service' },
+  dropdownOptions: { id: number; name: string }[] = [    
   ];
+  ngOnInit(): void{
+    this.http.get(environment.apiBaseUrl + '/services/get_id_name/').subscribe({
+      next: (response: any) => {
+        console.log('Service ID and Name:', response);
+        this.dropdownOptions = response;
+      },
+      error: (error) => {
+        console.error('ERROR: ', error);
+      },
+    });
+  }
 
   onRegister() {
     if (
@@ -58,7 +65,7 @@ export class RegisterComponent {
     }
 
     let user: Record<string, any> = { username: this.username, password: this.password,
-      name: this.fullName, email: this.email, phone: this.phone };
+      name: this.fullName, email: this.email, phone: this.phone, photo: 'default.png'};
 
     if (this.service) {
       const selectedService = this.dropdownOptions.find(option => option.name === this.service);

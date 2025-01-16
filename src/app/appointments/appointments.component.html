@@ -1,18 +1,25 @@
 <div class="appointments-container">
   <!-- Ongoing Appointment Box -->
-  <div class="ongoing-box" *ngIf="ongoingReservation">
-    <h2>Ongoing Reservation</h2>
-    <div class="ongoing-details">
-      <p><strong>Title:</strong> {{ ongoingReservation.title }}</p>
-      <p><strong>Date:</strong> {{ ongoingReservation.date }}</p>
-      <p><strong>Time:</strong> {{ ongoingReservation.time }}</p>
-      <p><strong>Location:</strong> {{ ongoingReservation.location }}</p>
-      <p><strong>Address:</strong> {{ ongoingReservation.address }}</p>
+  <div class="ongoing-box" 
+  [ngClass]="{'accepted': ongoingReservation.status === 'Accepted'}" 
+  *ngIf="hasReservation; else noReservation">
+<h2>Ongoing Reservation</h2>
+<div class="ongoing-details">
+ <p><strong>Title:</strong> {{ ongoingReservation.title }}</p>
+ <p><strong>Date:</strong> {{ ongoingReservation.date }}</p>
+ <p><strong>Time:</strong> {{ ongoingReservation.time }}</p>
+ <p><strong>Location:</strong> {{ ongoingReservation.location }}</p>
+ <p><strong>Address:</strong> {{ ongoingReservation.address }}</p>
+ <p><strong>Status:</strong> {{ ongoingReservation.status }}</p>
+</div>
+</div>
+  <ng-template #noReservation>
+    <div class="ongoing-box">
+      <h2>No appointment made</h2>
     </div>
-  </div>
-
+  </ng-template>
   <!-- History Section -->
-  <h3 class="history-title">Appointment History</h3>
+  <h3 class="history-title">Appointments History</h3>
   <div class="history-box">
     <div *ngIf="appointmentHistory && appointmentHistory.length > 0; else noAppointments">
       <div class="history-item" *ngFor="let appointment of appointmentHistory">
@@ -21,6 +28,7 @@
         <p><strong>Time:</strong> {{ appointment.time }}</p>
         <p><strong>Location:</strong> {{ appointment.location }}</p>
         <p><strong>Address:</strong> {{ appointment.address }}</p>
+        <p><strong>Status:</strong> {{ appointment.status }}</p>
       </div>
     </div>
     <ng-template #noAppointments>

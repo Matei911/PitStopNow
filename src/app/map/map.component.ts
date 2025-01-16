@@ -7,11 +7,15 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { environment } from '../environment';
+import * as route from '@arcgis/core/rest/route';
+import RouteParameters from "@arcgis/core/rest/support/RouteParameters";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import Graphic from '@arcgis/core/Graphic';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
+import SimpleLineSymbol from '@arcgis/core/symbols/SimpleLineSymbol';
 import Point from '@arcgis/core/geometry/Point';
 import { HttpClient } from '@angular/common/http';
+import Polyline from '@arcgis/core/geometry/Polyline';
 
 @Component({
   selector: 'app-map',
@@ -21,6 +25,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MapComponent implements OnInit {
   ServicesGraphicLayer: GraphicsLayer = new GraphicsLayer();
+  routeLayer: GraphicsLayer = new GraphicsLayer();
   trustedPartners: any[] = [];
   mapView!: MapView;
   highlightedPartnerIndex: number | null = null;
@@ -29,16 +34,18 @@ export class MapComponent implements OnInit {
   userLocationLayer: GraphicsLayer = new GraphicsLayer(); // Layer for user location
   userLocation: Point | null = null; // Store user location
   isLocationAvailable: boolean = false;
-  showPopup: boolean = true; 
+  showPopup: boolean = false; 
   stars: number[] = [1, 2, 3, 4, 5];
   hoverIndex: number = 0;
   currentRating: number = 0;
+  companyName: string = sessionStorage.getItem("service_name") || "";
 
   constructor(private elementRef: ElementRef, private router: Router, private http: HttpClient) {}
   //PopUp related methods
   dismissPopup(): void {
     this.showPopup = false; // Hide the popup
   }
+
   setHoverIndex(index: number): void {
     this.hoverIndex = index;
   }
@@ -49,16 +56,44 @@ export class MapComponent implements OnInit {
 
   setRating(index: number): void {
     this.currentRating = index;
+    this.dismissPopup();
+    this.http.put(environment.apiBaseUrl + "/services/add_rating/" 
+      + sessionStorage.getItem("id_service_reservation"), {rating: index}).subscribe({
+        next: (response: any) => {
+          console.log(response["success"]);
+
+        },
+        error: (error) => {
+          console.error('ERROR:', error);
+        }
+      })
+    this.http.put(environment.apiBaseUrl + "/users/rating_added/" + sessionStorage.getItem("token"), {}).subscribe({
+      next: (response: any) => {
+        console.log(response["success"]);
+      },
+      error: (error) => {
+        console.error('ERROR:', error);
+      }
+    })
     console.log(`User selected rating: ${this.currentRating}`);
   }
   //
   ngOnInit(): void {
     this.http.get(environment.apiBaseUrl + '/reservations/check/' + sessionStorage.getItem("token")).subscribe({
-      next: (response: any) => {
-        let status : string = response["status"];
-        if (status === "Reservation Done!")
+        next: (response: any) => {
+        let status : string = response["detail"];
+        console.log(response);
+        if (status === "Reservation finished")
         {
+          this.showPopup = true;
           console.log("Reservation");
+          sessionStorage.setItem("id_service_reservation", response["id_service_reservation"]);
+          sessionStorage.setItem("service_name", response["service_name"]);
+          this.companyName = response["service_name"];
+        }
+        else
+        {
+          this.dismissPopup();
         }
       },
       error: (error) => {
@@ -89,6 +124,7 @@ export class MapComponent implements OnInit {
   
       map.add(this.ServicesGraphicLayer);
       map.add(this.userLocationLayer);
+      map.add(this.routeLayer);
   
       const view = new MapView({
         container: this.elementRef.nativeElement.querySelector('#mapViewDiv'),
@@ -200,6 +236,11 @@ displayUserLocation(): void {
   }
 }
 
+clearRoute(): void {
+  this.routeLayer.removeAll();
+  console.log('Route cleared successfully!');
+}
+
 calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371; // Earth's radius in kilometers
   const toRadians = (degree: number) => (degree * Math.PI) / 180;
@@ -303,6 +344,24 @@ highlightPartner(index: number): void {
               const mapViewContainer = this.elementRef.nativeElement.querySelector('#mapViewDiv');
               mapViewContainer.appendChild(popup);
               this.activePopup = popup;
+
+              const reserveButton = popup.querySelector('#reserveButton');
+              if (reserveButton) {
+                reserveButton.addEventListener('click', () => {
+                  const partnerIndex = attributes.index;
+                  const partner = this.trustedPartners[partnerIndex];
+                  this.goToReserve(partner);
+                });
+              }
+
+              const routeButton = popup.querySelector('#routeButton');
+              if (routeButton) {
+                routeButton.addEventListener('click', () => {
+                  const partnerIndex = attributes.index;
+                  const partner = this.trustedPartners[partnerIndex];
+                  this.showRouteToPartner(partner);
+                });
+              }
   
               // Remove the popup when clicking outside
               mapViewContainer.addEventListener('click', () => {
@@ -317,41 +376,189 @@ highlightPartner(index: number): void {
   });
 }
 
-createPopupContent(attributes: any): string {
-    const { Name, Address, Rating, Available } = attributes;
-    const availabilityColor = Available === 'Yes' ? 'green' : 'red';
+displayRouteOnMap(routeData: any) {
+  // Clear old route
+  this.routeLayer.removeAll();
 
-    return `
-        <h3 style="margin: 0; font-size: 16px; font-weight: bold;">${Name}</h3>
-        <p><strong>Address:</strong> ${Address}</p>
-        <p><strong>Rating:</strong> ★ ${Rating} stars</p>
-        <p><strong>Available:</strong> <span style="color: ${availabilityColor};">${Available}</span></p>
-        ${Available === 'Yes' ? `<button style="padding: 8px 12px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">Reserve</button>` : ''}
-    `;
+  const routeFeatures = routeData.routes?.features;
+  if (!routeFeatures || routeFeatures.length === 0) {
+    console.error("No route found in response:", routeData);
+    return;
+  }
+
+  const routeGeometry = routeFeatures[0].geometry;
+
+  // Create Polyline without "type"
+  const polyline = new Polyline({
+    paths: routeGeometry.paths,
+    spatialReference: { wkid: 4326 }
+  });
+
+  const routeSymbol = new SimpleLineSymbol({
+    color: [0, 102, 204, 0.8],
+    width: 3,
+    style: "solid"
+  });
+
+  const routeGraphic = new Graphic({
+    geometry: polyline,
+    symbol: routeSymbol
+  });
+
+  this.routeLayer.add(routeGraphic);
+
+  const extent = polyline.extent;
+  if (extent) {
+    this.mapView.goTo(extent.expand(1.3));
+  }
 }
+
+showRouteToPartner(partner: any) {
+  if (!this.userLocation) {
+    console.error("No user location found. Cannot route.");
+    return;
+  }
+
+  const payload = {
+    start_lat: this.userLocation.latitude,
+    start_lon: this.userLocation.longitude,
+    end_lat: partner.latitude,
+    end_lon: partner.longitude
+  };
+
+  console.log('Payload being sent to backend /route:', payload);
+  this.http.post<any>(environment.apiBaseUrl + '/route', payload).subscribe({
+    next: (routeResponse: any) => {
+      this.displayRouteOnMap(routeResponse);
+    },
+    error: (err) => {
+      console.error('Failed to get route:', err);
+    }
+  });
+}
+
+createPopupContent(attributes: any): string {
+  const { Name, Address, Rating, Available } = attributes;
+  const availabilityColor = Available === 'Yes' ? 'green' : 'red';
+
+  let actionButtons = "";
+  if (Available === 'Yes') {
+    actionButtons += `
+      <button 
+        id="reserveButton"
+        style="padding: 8px 12px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 8px;"
+      >
+        Reserve
+      </button>
+    `;
+    if (this.isLocationAvailable) {
+      actionButtons += `
+        <button 
+          id="routeButton"
+          style="padding: 8px 12px; background-color: #005cb2; color: white; border: none; border-radius: 4px; cursor: pointer;"
+        >
+          Route
+        </button>
+      `;
+    }
+  }
+
+  return `
+    <h3 style="margin: 0; font-size: 16px; font-weight: bold;">${Name}</h3>
+    <p><strong>Address:</strong> ${Address}</p>
+    <p><strong>Rating:</strong> ★ ${Rating} stars</p>
+    <p><strong>Available:</strong> <span style="color: ${availabilityColor};">${Available}</span></p>
+    ${actionButtons}
+  `;
+}
+
 
 
 centerMap(partner: any): void {
   // Find the corresponding graphic in the GraphicsLayer
   const targetGraphic = this.ServicesGraphicLayer.graphics.find((graphic: any) => {
-      return graphic.attributes.Name === partner.name;
+    return graphic.attributes.Name === partner.name;
   });
 
-  if (targetGraphic) {
-      // Center the map on the graphic's geometry
-      this.mapView.goTo({
-          target: targetGraphic.geometry,
-          zoom: 17
-      }).then(() => {
-          this.currentCenteredPartner = partner;
-      });
-      const index = this.trustedPartners.findIndex((p) => p.name === partner.name);
-      this.highlightPartner(index);
-  } else {
-      console.warn('Graphic not found for the given partner.');
+  if (!targetGraphic) {
+    console.warn('Graphic not found for the given partner.');
+    return;
   }
-}
 
+  const geometry = targetGraphic.geometry;
+  const attributes = targetGraphic.attributes;
+  
+  // Highlight in the list
+  const index = this.trustedPartners.findIndex((p) => p.name === partner.name);
+  this.highlightPartner(index);
+  
+  // First, goTo the partner's location
+  this.mapView.goTo({
+    target: geometry,
+    zoom: 17
+  }).then(() => {
+
+    // Remove any existing popup
+    if (this.activePopup) {
+      this.activePopup.remove();
+      this.activePopup = null;
+    }
+
+    // Create the popup content using your existing helper
+    const popupContent = this.createPopupContent(attributes);
+
+    // Create a new popup div
+    const popup = document.createElement('div');
+    popup.innerHTML = popupContent;
+    popup.style.position = 'absolute';
+    popup.style.backgroundColor = 'white';
+    popup.style.padding = '10px';
+    popup.style.boxShadow = '0px 4px 8px rgba(0,0,0,0.2)';
+    popup.style.borderRadius = '8px';
+    popup.style.fontFamily = 'Arial, sans-serif';
+    popup.style.fontSize = '14px';
+    popup.style.color = '#444';
+
+    const screenPoint = this.mapView.toScreen(geometry as Point);
+
+    // Position the popup near the marker's screen location
+    popup.style.left = screenPoint.x + 'px';
+    popup.style.top = screenPoint.y + 'px';
+
+    // Append it to the map container
+    const mapViewContainer = this.elementRef.nativeElement.querySelector('#mapViewDiv');
+    mapViewContainer.appendChild(popup);
+    this.activePopup = popup;
+
+    const reserveButton = popup.querySelector('#reserveButton');
+    if (reserveButton) {
+      reserveButton.addEventListener('click', () => {
+        // Retrieve the partner using the index
+        const selectedPartner = this.trustedPartners[index];
+        this.goToReserve(selectedPartner);
+      });
+    }
+
+    const routeButton = popup.querySelector('#routeButton');
+    if (routeButton) {
+      routeButton.addEventListener('click', () => {
+        const partnerIndex = attributes.index;
+        const partner = this.trustedPartners[partnerIndex];
+        this.showRouteToPartner(partner);
+      });
+    }
+
+    mapViewContainer.addEventListener(
+      'click',
+      () => {
+        if (popup) {
+          popup.remove();
+        }
+      },
+      { once: true }
+    );
+  });
+}
   
   goToProfile(): void {
     this.router.navigate(['/profile']);
@@ -381,5 +588,16 @@ centerMap(partner: any): void {
       console.warn('sendBeacon not supported by this browser.');
     }
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem('photo');
+    if ("service_name" in sessionStorage) {
+      sessionStorage.removeItem('service_name');
+    }
+    if ("id_service_reservation" in sessionStorage) {
+      sessionStorage.removeItem('id_service_reservation');
+    }
+    if ("serviceId" in sessionStorage) {
+      sessionStorage.removeItem('serviceId');
+    }
+    sessionStorage.removeItem("username");
   }
 }

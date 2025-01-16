@@ -18,47 +18,62 @@ export class AppointmentsComponent {
   constructor(private http: HttpClient, private router: Router) {}
   // Ongoing reservation data
   ongoingReservation = {
-    title: '',
-    date: '',
-    time: '',
-    location: '',
-    address: ''
+    title: '-',
+    date: '-',
+    time: '-',
+    location: '-',
+    address: '-',
+    status: '-',
   };
+  hasReservation = false;
 
   // Appointment history data
-  appointmentHistory: { title: string; date: string; time: string; location: string ; address: string}[] = [];
+  appointmentHistory: { title: string; date: string; time: string; location: string ; address: string, status: string}[] = [];
   ngOnInit(): void{
-    this.http.get(environment.apiBaseUrl + "/reservations/" + sessionStorage.getItem("token")).subscribe({
+    this.http.get(environment.apiBaseUrl + "/reservations/current_reservation/" + sessionStorage.getItem("token")).subscribe({
       next : (response: any) =>{
+        console.log(response);
+        if ("detail" in response) {
+          return;
+        }
         this.ongoingReservation.date = response["data"];
         this.ongoingReservation.title = response["title"];
         this.ongoingReservation.time = response["time"];
         this.ongoingReservation.location = response["name"];
         this.ongoingReservation.address = response["address"];
+        this.ongoingReservation.status = response["status"];
+        this.ongoingReservation.status = this.ongoingReservation.status.charAt(0).toUpperCase() + this.ongoingReservation.status.slice(1);
+        this.hasReservation = true;
       },
       error: (error) => {
         console.log("ERROR :", error);
       }
     })
-
-    this.http.get(environment.apiBaseUrl + "/history/" + sessionStorage.getItem("token")).subscribe({
+    this.http.get(environment.apiBaseUrl + "/history/user/" + sessionStorage.getItem("token")).subscribe({
       next : (response: any) =>{
-        this.appointmentHistory.push({
-          title : response["title"],
-          date : response["data"],
-          time : response["time"],
-          location : response["name"],
-          address : response["address"]
+        // console.log(response);
+        if ("detail" in response) {
+          return;
+        }
+        response["history"].forEach((element: any) => {
+          // console.log(element);
+          this.appointmentHistory.push({
+            title: element["title"],
+            date: element["data"],
+            time: element["ora"],
+            location: element["name"],
+            address: element["address"],
+            status: element["status"]
+          });
         });
-        this.appointmentHistory = this.appointmentHistory.slice();
-        console.log(this.appointmentHistory);
-        console.log(response);
+        // console.log(this.appointmentHistory);
       },
       error: (error) => {
         console.log("ERROR :", error);
       }
     })
   }
+
   goToProfile(): void {
     this.router.navigate(['/profile']);
   }
@@ -83,6 +98,16 @@ export class AppointmentsComponent {
       console.warn('sendBeacon not supported by this browser.');
     }
     sessionStorage.removeItem("token");
-
+    sessionStorage.removeItem('photo');
+    if ("service_name" in sessionStorage) {
+      sessionStorage.removeItem('service_name');
+    }
+    if ("id_service_reservation" in sessionStorage) {
+      sessionStorage.removeItem('id_service_reservation');
+    }
+    if ("serviceId" in sessionStorage) {
+      sessionStorage.removeItem('serviceId');
+    }
+    sessionStorage.removeItem("username");
   }
 }
