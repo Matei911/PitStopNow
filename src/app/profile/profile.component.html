@@ -44,18 +44,20 @@
             <strong>Phone:</strong>
             <span *ngIf="!isEditing">{{ phone }}</span>
             <input *ngIf="isEditing" [(ngModel)]="phone" class="form-input" />
+            <small *ngIf="phoneError" class="error-message">{{ phoneError }}</small>
         </p>
         <p>
             <strong>Email:</strong>
             <span *ngIf="!isEditing">{{ email }}</span>
             <input *ngIf="isEditing" [(ngModel)]="email" type="email" class="form-input" />
+            <small *ngIf="emailError" class="error-message">{{ emailError }}</small>
         </p>
     </div>
 
     <div class="profile-image">
         <h2>Image Profile</h2>
         <img *ngIf="profileImage" [src]="profileImage" alt="Imagine Profil" class="profile-img" />
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <input *ngIf="isEditing" type="file" (change)="onFileSelected($event)" accept="image/*" />
     </div>
 
     <div class="profile-actions">
@@ -65,14 +67,25 @@
     </div>
 </div>
 <div class="bottom-nav">
-    <div class="nav-button" (click)="goToMap()">
+    <!-- Show "Home" only if not from Admin -->
+    <div class="nav-button" *ngIf="!fromAdmin" (click)="goToMap()">
         <img src="home.png" alt="Home" />
         <span>Home</span>
     </div>
-    <div class="nav-button" (click)="goToAppointments()">
+
+    <!-- Show "Appointments" only if not from Admin -->
+    <div class="nav-button" *ngIf="!fromAdmin" (click)="goToAppointments()">
         <img src="appointment.png" alt="Appointments" />
         <span>Appointments</span>
     </div>
+
+    <!-- Show "Appointments" if from Admin -->
+    <div class="nav-button" *ngIf="fromAdmin" (click)="goToAdmin()">
+        <img src="appointment.png" alt="Appointments" />
+        <span>Appointments</span>
+    </div>
+
+    <!-- Always show "My Profile" -->
     <div class="nav-button" (click)="goToProfile()">
         <img src="user.png" alt="Profile" />
         <span>My profile</span>

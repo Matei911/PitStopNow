@@ -22,12 +22,13 @@ export class AppointmentsComponent {
     date: '-',
     time: '-',
     location: '-',
-    address: '-'
+    address: '-',
+    status: '-',
   };
   hasReservation = false;
 
   // Appointment history data
-  appointmentHistory: { title: string; date: string; time: string; location: string ; address: string}[] = [];
+  appointmentHistory: { title: string; date: string; time: string; location: string ; address: string, status: string}[] = [];
   ngOnInit(): void{
     this.http.get(environment.apiBaseUrl + "/reservations/current_reservation/" + sessionStorage.getItem("token")).subscribe({
       next : (response: any) =>{
@@ -40,6 +41,8 @@ export class AppointmentsComponent {
         this.ongoingReservation.time = response["time"];
         this.ongoingReservation.location = response["name"];
         this.ongoingReservation.address = response["address"];
+        this.ongoingReservation.status = response["status"];
+        this.ongoingReservation.status = this.ongoingReservation.status.charAt(0).toUpperCase() + this.ongoingReservation.status.slice(1);
         this.hasReservation = true;
       },
       error: (error) => {
@@ -59,7 +62,8 @@ export class AppointmentsComponent {
             date: element["data"],
             time: element["ora"],
             location: element["name"],
-            address: element["address"]
+            address: element["address"],
+            status: element["status"]
           });
         });
         // console.log(this.appointmentHistory);
@@ -94,6 +98,16 @@ export class AppointmentsComponent {
       console.warn('sendBeacon not supported by this browser.');
     }
     sessionStorage.removeItem("token");
-
+    sessionStorage.removeItem('photo');
+    if ("service_name" in sessionStorage) {
+      sessionStorage.removeItem('service_name');
+    }
+    if ("id_service_reservation" in sessionStorage) {
+      sessionStorage.removeItem('id_service_reservation');
+    }
+    if ("serviceId" in sessionStorage) {
+      sessionStorage.removeItem('serviceId');
+    }
+    sessionStorage.removeItem("username");
   }
 }

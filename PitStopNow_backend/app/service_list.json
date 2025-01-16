@@ -1,0 +1,96 @@
+{
+  "services": [
+    {
+      "name": "ProAuto Targu Jiu",
+      "address": "Calea București 66, Târgu Jiu"
+    },
+    {
+      "name": "CLASAUTO SRL",
+      "address": "Strada Dobrogeanu Gherea 2B, Târgu Jiu"
+    },
+    {
+      "name": "Bosch Car Service",
+      "address": "Strada Barajului 8A, Târgu Jiu"
+    },
+    {
+      "name": "M-Auto",
+      "address": "Strada Tismana nr.71, Târgu Jiu"
+    },
+    {
+      "name": "Euromaster Ascet",
+      "address": "Strada Termocentralei 20, Târgu Jiu"
+    },
+    {
+      "name": "Dacia Lazar Service",
+      "address": "Aleea Victoriei 1, Târgu Jiu"
+    },
+    {
+      "name": "Mobile Experts",
+      "address": "Str. Tismana nr. 26, Târgu Jiu"
+    },
+    {
+      "name": "Mec Dany Service",
+      "address": "Strada George Enescu 17, Târgu Jiu"
+    },
+    {
+      "name": "Kilometrul 0 Srl",
+      "address": "Strada Dobrogeanu Gherea 19A, Târgu Jiu"
+    },
+    {
+      "name": "Service AUTOVSC",
+      "address": "Calea București, Târgu Jiu"
+    },
+    {
+      "name": "Autec Autotechnik",
+      "address": "Strada Narciselor 91, Târgu Jiu"
+    },
+    {
+      "name": "Floryan Service Auto",
+      "address": "376F+FM, Târgu Jiu"
+    },
+    {
+      "name": "AutoVest Service Auto",
+      "address": "Bulevardul Ecaterina Teodoroiu 517, Târgu Jiu"
+    },
+    {
+      "name": "Service Auto Luca Claudiu",
+      "address": "Strada Termocentralei 39, Târgu Jiu"
+    },
+    {
+      "name": "Service Auto DAN",
+      "address": "Strada Tudor Vladimirescu 129, Târgu Jiu"
+    },
+    {
+      "name": "Service Auto Croicu",
+      "address": "Strada Tismana 5, Târgu Jiu"
+    },
+    {
+      "name": "VW Audi Service S.R.L.",
+      "address": "Calea București 170, Târgu Jiu"
+    },
+    {
+      "name": "Service Auto Vw",
+      "address": "Strada Panduri 105, Târgu Jiu"
+    },
+    {
+      "name": "Orfescu S.R.L.",
+      "address": "Calea Bucuresti, 9, Târgu Jiu"
+    },
+    {
+      "name": "CCP Garage",
+      "address": "Strada Islaz 3, Târgu Jiu"
+    },
+    {
+      "name": "Sc Arjoserv Srl",
+      "address": "Strada Aurel Vlaicu 28b, Târgu Jiu"
+    },
+    {
+      "name": "RZW Autoservice",
+      "address": "Strada Ana Ipătescu 121, Târgu Jiu"
+    },
+    {
+      "name": "AUTOREX SRL",
+      "address": "Bulevardul Ecaterina Teodoroiu 11-13, Târgu Jiu"
+    }
+  ]
+}

@@ -26,11 +26,6 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {
     window.onload = () => {
       console.log(sessionStorage);
-      // if (sessionStorage.getItem("token")){
-      //   history.replaceState(null, "", window.location.href);
-      //   this.router.navigate(['/map']);
-      // }
-      // Logica ta aici
     };
   }
 
@@ -48,8 +43,23 @@ export class LoginComponent {
         console.log('Login successful:', response);
         sessionStorage.setItem('username', this.username);
         sessionStorage.setItem("token", response["token"]);
+        sessionStorage.setItem("photo", response["photo"]);
         history.replaceState(null, "", window.location.href);
-        this.router.navigate(['/map']);
+
+        this.http.get(environment.apiBaseUrl + '/users/role/' + sessionStorage.getItem('token')).subscribe({
+          next: (role_response: any) => {
+            console.log('Role:', role_response['role']);
+            if (role_response['role'] === 'service') {
+              sessionStorage.setItem('serviceId', response['id_service']);
+              console.log('Service ID:', response['id_service']);
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/map']);
+            }
+          }
+        });
+
+        
       },
       error: (error) => {
         console.error('Login error:', error);

@@ -18,7 +18,10 @@
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
-
+.ongoing-box.accepted {
+  background: rgba(0, 255, 0, 0.2); /* Semi-transparent green */
+  border: 1px solid rgba(0, 255, 0, 0.8);
+}
 .ongoing-box h2 {
   margin: 0 0 10px 0;
   font-size: 1.5em;

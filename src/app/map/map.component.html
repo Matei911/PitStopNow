@@ -4,13 +4,13 @@
   <div class="title">Trusted Partners</div>
   <div *ngFor="let partner of trustedPartners; let i = index" class="box" [ngClass]="{'selected': highlightedPartnerIndex === i}" (click)="centerMap(partner)">
     <div class="logo-container">
-      <img [src]="partner.logo" [alt]="partner.name" class="logo" />
+      <img [src]="partner.photo" [alt]="partner.name" class="logo" />
     </div>
     <div class="info-container">
       <div class="name">{{ partner.name }}</div>
       <div class="rating">
         <img src="star.png" alt="star" class="star" />
-        {{ partner.rating }}
+        {{ partner.rating}}
       </div>
       <div class="address">{{ partner.address }}</div>
       <div *ngIf="partner.distance" class="distance">{{ partner.distance }} km</div>
@@ -23,6 +23,9 @@
 <div id="mapViewDiv"></div>
 <button *ngIf="isLocationAvailable" class="location-button" (click)="goToCurrentLocation()">
   <img src="compass-svgrepo-com.svg" alt="Go to Current Location" class="icon" />
+</button>
+<button *ngIf="routeLayer.graphics.length > 0" class="clear-route-button" (click)="clearRoute()">
+  Clear Route
 </button>
 <!-- Popup Box -->
 <div *ngIf="showPopup" class="popup-box">
