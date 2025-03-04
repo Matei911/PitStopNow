@@ -57,7 +57,7 @@ PitStopNow is a full-stack web application that allows users to find, book, and 
    ```
 4. Start the FastAPI server:
    ```bash
-   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   python -m app.main
    ```
 
 ### **Frontend Setup**
