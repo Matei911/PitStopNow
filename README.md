@@ -1,59 +1,113 @@
-# PitStopNow
+# PitStopNow - Auto Service Booking Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+## Overview
+PitStopNow is a full-stack web application that allows users to find, book, and manage auto repair services. The system is built using **FastAPI** for the backend and **Angular** for the frontend, integrated with a **PostgreSQL** database.
 
-## Development server
+## Features
+### **Backend Features (FastAPI)**
+- User authentication and management (registration, login, profile management)
+- Auto service management (add, update, delete, list services)
+- Reservation system (schedule, update, delete appointments)
+- Historical records for past reservations
+- Integration with **ArcGIS API** for geolocation and route calculations
+- Role-based access for users and service providers
+- Secure API endpoints using tokens
 
-To start a local development server, run:
+### **Frontend Features (Angular)**
+- User-friendly interface for booking and managing reservations
+- Map integration for locating auto services
+- Admin panel for service providers to manage bookings
+- Secure authentication and authorization system
+- Responsive design for mobile and desktop
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Technologies Used
+### **Backend**
+- FastAPI (Python)
+- PostgreSQL
+- SQLAlchemy ORM
+- ArcGIS API (for geolocation and route services)
+- Docker (optional for containerization)
 
-## Code scaffolding
+### **Frontend**
+- Angular
+- TypeScript
+- HTML, CSS
+- RxJS (for state management)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## Installation and Setup
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### **Backend Setup**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/PitStopNow.git
+   cd PitStopNow/PitStopNow_backend
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the FastAPI server:
+   ```bash
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   ```
 
-```bash
-ng generate --help
-```
+### **Frontend Setup**
+1. Navigate to the frontend directory:
+   ```bash
+   cd ../src
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Angular development server:
+   ```bash
+   ng serve
+   ```
 
-## Building
+---
 
-To build the project run:
+## API Endpoints (Backend)
 
-```bash
-ng build
-```
+### **User Management**
+- Register a new user: `POST /users/register`
+- Login: `POST /users/login`
+- Get user info: `GET /users/{token}`
+- Update user: `PUT /users/{token}`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### **Service Management**
+- Add a service: `POST /services/add/`
+- Get all services: `GET /services/get/`
+- Get a service by ID: `GET /services/get/{id}`
 
-## Running unit tests
+### **Reservation System**
+- Create a reservation: `POST /reservations/add/`
+- Get user reservations: `GET /reservations/current_reservation/{token}`
+- Get service reservations: `GET /reservations/service/{service_id}`
+- Accept a reservation: `PUT /reservations/service/accept/{reservation_id}`
+- Cancel a reservation: `DELETE /reservations/service/delete/{reservation_id}`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### **History**
+- Get user history: `GET /history/user/{token}`
+- Get service history: `GET /history/service/{service_id}`
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## Database Schema
+The database includes the following tables:
+- **Users**: Stores user details and authentication tokens.
+- **Services**: Stores details of auto repair services.
+- **Reservations**: Handles user bookings.
+- **History**: Keeps track of past reservations.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
